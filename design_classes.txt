@@ -1,0 +1,32 @@
+Game class:
+
+Attributes
+1. letterFrequencyDict
+2. currentWordToBeGuessed
+3. lettersGuessedList
+4. lettersMissedList
+5. currentGuessedWord
+6. finalScore
+7. currentGuessedLetter
+8. successStatus
+9. numOfBadGuesses
+10.guessInput
+
+
+Guess class:
+
+Attributes
+1. currentOption
+2. optionDict
+
+methods:
+1. displayOpeningMessage()
+2. displayGameOptions()
+3. displayEnterOption()
+4. askUserForOption() (store in currentOption)
+5. validateOptionInput()
+6. displayEnterLetter()
+7. askUserForLetter(gameObject) [store in currentGuessedLetter]
+8. feedbackForCurrentGuess(gameObject)
+9. displayLettersGuessed(gameObject) [display lettersGuessedList]
+10. displayCurrentWordGuessed(gameObject) [display currentGuessedWord]
