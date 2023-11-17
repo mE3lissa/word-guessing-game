@@ -2,36 +2,21 @@
 
 import random   # to generate a random value from the list
 
-
-
 class StringDatabase:
     
     def __init__(self, fileName):
-        self.words = self.readWordsFromFile(filePath);
+        self.wordsList = self.loadWords(fileName);
         
-    def readWordsFromFile(self, fileName):
-    
-        # list to store 4 letter words from file
-        wordToGuessList = [];
-
-        # opening the text file
-        with open(fileName,"rt") as file:
-
-            # reading each line    
-            for line in file:
-
-                # reading each word        
-                for word in line.split():
-
-                    # store in list
-                    wordToGuessList.append(word);
+    def loadWords(self, fileName):
+        try:
+            with open(fileName, 'rt') as file:
+                words = [word.strip().lower() for word in file.readlines()]
+            return words
+        except FileNotFoundError:
+            print(f"Error: File '{fileName}' not found.")
+            exit(1)
         
-        selectRandomWord(wordToGuessList);
-    
-        
-    def selectRandomWord(self):
-        #generate a random word from word list
-        wordToGuess = random.choice(wordToGuessList);
+    def getRandomWord(self):
+        return random.choice(self.wordsList);
 
-        #pass the random word to be guessed
         
