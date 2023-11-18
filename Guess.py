@@ -15,10 +15,18 @@ class Guess:
             "q": "to quit",
         }
 
+    def clearScreen(self):
+        os.system("clear" if os.name == "posix" else "cls")
+
 
     def displayOpeningMessage(self):
-        os.system("clear" if os.name == "posix" else "cls")  # Clear screen
+        self.clearScreen()
         print("++\n++ The great guessing game\n++\n")
+    
+
+    def displayGameReportMessage(self):
+        self.clearScreen()
+        print("++\n++ Game Report\n++\n")
 
 
     def displayGameOptions(self):
@@ -128,7 +136,7 @@ class Guess:
     
 
     def calculateRemainingLettersFrequency(self, gameObject):
-        frequency = 0
+        frequency = 0.0
         for index, char in enumerate(gameObject.currentGuessedWord):
             if char == "_" and gameObject.targetWord[index] in gameObject.letterFrequencyDict:
                 frequency += gameObject.letterFrequencyDict[gameObject.targetWord[index]]
@@ -137,15 +145,16 @@ class Guess:
 
     def calculateFinalScore(self, gameObject):
         if gameObject.successStatus:
-            gameObject.finalScore = {self.calculateRemainingLettersFrequency(gameObject)/len(gameObject.lettersGuessedList)} * { 1 - (0.1 * gameObject.numOfBadGuesses)}
+            divideFrequencyBy = 1 if len(gameObject.lettersGuessedList) == 0 else len(gameObject.lettersGuessedList)    # avoid divisionByZeroError 
+            gameObject.finalScore = (self.calculateRemainingLettersFrequency(gameObject)/divideFrequencyBy) * ( 1 - (0.1 * gameObject.numOfBadGuesses))
         else:
-            gameObject.finalScore = self.calculateRemainingLettersFrequency(gameObject)
+            gameObject.finalScore = -(self.calculateRemainingLettersFrequency(gameObject))
 
 
-    def displayFinalReport(self):
-        for gameObject in self.gamesPlayed:
-            print(gameObject.targetWord)
-            print(gameObject.finalScore)
+    def displayFinalReport(self, gameObject):
+        self.displayGameReportMessage()
+        for index, gameObject in enumerate(self.gamesPlayed):
+            print(f"{index}  {gameObject.targetWord}  {gameObject.successStatus}  {gameObject.numOfBadGuesses}  {len(gameObject.lettersGuessedList)}  {format((gameObject.finalScore), ".2f")}" )
 
 
     def playGame(self, wordDatabase, mode):
@@ -167,11 +176,17 @@ class Guess:
                     self.processGuessInput(self.currentGame)
         
                     if self.currentGame.successStatus:
+                        self.calculateFinalScore(self.currentGame)
+                        self.gamesPlayed.append(self.currentGame)
                         self.pressAnyKeyToContinue()
                         break
 
                 elif self.currentOption == 't':
                     self.processTellMeOption(self.currentGame)
+                    self.calculateFinalScore(self.currentGame)
+                    self.gamesPlayed.append(self.currentGame)
+                    self.pressAnyKeyToContinue()
+                    break
 
                 elif self.currentOption == 'l':
                     self.currentGame.currentGuessedLetter = input("\nEnter a letter: ").strip().lower()
@@ -179,13 +194,13 @@ class Guess:
 
                     if self.currentGame.successStatus:
                         print("\n@@\n@@ FEEDBACK: Congratulations, Einstein. You guessed the word!\n@@")
+                        self.calculateFinalScore(self.currentGame)
+                        self.gamesPlayed.append(self.currentGame)
                         self.pressAnyKeyToContinue()
                         break
 
                 elif self.currentOption == 'q':
-                    self.gamesPlayed.append(self.currentGame)
-                    print("Game Over. Thanks for playing!")
-                    self.displayFinalReport()
+                    self.displayFinalReport(self.currentGame)
                     return
                 
                 self.pressAnyKeyToContinue()
