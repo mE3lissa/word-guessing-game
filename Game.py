@@ -32,6 +32,7 @@ class Game:
         }
         self.targetWord = wordToGuess.lower()
         self.lettersGuessedList = []
+        self.wordsGuessedList = []
         self.lettersMissedList = []
         self.currentGuessedWord = [
             "_" if char.isalpha() else char for char in self.targetWord
@@ -39,18 +40,18 @@ class Game:
         self.finalScore = 0
         self.currentGuessedLetter = None
         self.successStatus = False
-        self.numOfBadGuesses = 0
+        self.numOfBadGuesses = 1
         self.guessInput = None
+        
 
 
     # # implement
     # def giveUp(self):
-    #     self.successStatus = False
     #     self.finalScore -= self.calculateRemainingLettersPenalty() 
+
 
     # # implement    
     # def calculateRemainingLettersPenalty(self):
-
 
 
     # def updateLetterFrequencyDict(self):
@@ -58,11 +59,6 @@ class Game:
     #         if char.isalpha():
     #             self.letterFrequencyDict[char] = self.letterFrequencyDict.get(char, 0) + 1
 
-
-
-    # def updateGameStatus(self):
-    #     if '_' not in self.currentGuessedWord:
-    #         self.successStatus = True
 
     # def updateFinalScore(self):
     #     self.finalScore = max(0, len(self.targetWord) - self.numOfBadGuesses)
@@ -87,8 +83,5 @@ class Game:
     #     for letter, frequency in self.letterFrequencyDict.items():
     #         print(f"{letter}: {frequency}")
 
-    # def askForGuess(self):
-    #     print("Enter your guess:")
-    #     self.guessInput = input().lower()
-
+ 
   
