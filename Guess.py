@@ -74,7 +74,7 @@ class Guess:
         self.displayGameReportMessage()
         self.displayFinalReportColumnHeadings()
         for index, gameObject in enumerate(self.gamesPlayed):
-            print(f"{index+1:<20}{gameObject.targetWord:<20}{'Success' if gameObject.successStatus else 'Gave Up':<20}{gameObject.numOfBadGuesses:<20}{len(gameObject.lettersMissedList):<20}{format((gameObject.gameScore), ".2f"):<20}")
+            print("{:<20}{:<20}{:<20}{:<20}{:<20}{:<20}".format(index+1, gameObject.targetWord, 'Success' if gameObject.successStatus else 'Gave Up', gameObject.numOfBadGuesses, len(gameObject.lettersMissedList), format(gameObject.gameScore, ".2f")))
         self.displayFinalScore()
 
 
