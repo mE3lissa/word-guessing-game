@@ -1,7 +1,17 @@
-# # maintain information about a specific game (needed for the final report)
-
 class Game:
     def __init__(self, wordToGuess):
+        self.targetWord = wordToGuess.lower()
+        self.lettersGuessedList = []
+        self.wordsGuessedList = []
+        self.lettersMissedList = []
+        self.currentGuessedWord = [
+            "_" if char.isalpha() else char for char in self.targetWord
+        ]
+        self.gameScore = 0
+        self.currentGuessedLetter = None
+        self.successStatus = False
+        self.numOfBadGuesses = 0
+        self.guessInput = None
         self.letterFrequencyDict = {
             "a": 8.17,
             "b": 1.49,
@@ -30,58 +40,3 @@ class Game:
             "y": 1.97,
             "z": 0.07,
         }
-        self.targetWord = wordToGuess.lower()
-        self.lettersGuessedList = []
-        self.wordsGuessedList = []
-        self.lettersMissedList = []
-        self.currentGuessedWord = [
-            "_" if char.isalpha() else char for char in self.targetWord
-        ]
-        self.finalScore = 0
-        self.currentGuessedLetter = None
-        self.successStatus = False
-        self.numOfBadGuesses = 0
-        self.guessInput = None
-        
-
-
-    # # implement
-    # def giveUp(self):
-    #     self.finalScore -= self.calculateRemainingLettersPenalty() 
-
-
-    # # implement    
-    # def calculateRemainingLettersPenalty(self):
-
-
-    # def updateLetterFrequencyDict(self):
-    #     for char in self.targetWord:
-    #         if char.isalpha():
-    #             self.letterFrequencyDict[char] = self.letterFrequencyDict.get(char, 0) + 1
-
-
-    # def updateFinalScore(self):
-    #     self.finalScore = max(0, len(self.targetWord) - self.numOfBadGuesses)
-
-    # def displayGameStatus(self):
-    #     if self.successStatus:
-    #         print("Congratulations! You guessed the word.")
-    #     else:
-    #         print(f"Sorry, you've run out of attempts. The correct word was '{self.targetWord}'.")
-
-    # def displayCurrentGuessedWord(self):
-    #     print("Current Word: ", " ".join(self.currentGuessedWord))
-
-    # def displayFinalScore(self):
-    #     print(f"Final Score: {self.finalScore}")
-
-    # def displayNumOfBadGuesses(self):
-    #     print(f"Number of Incorrect Guesses: {self.numOfBadGuesses}")
-
-    # def displayLetterFrequency(self):
-    #     print("Letter Frequency:")
-    #     for letter, frequency in self.letterFrequencyDict.items():
-    #         print(f"{letter}: {frequency}")
-
- 
-  
